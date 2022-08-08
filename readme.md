@@ -1,22 +1,50 @@
-## Publishing
+# config-proxy
 
-Once all `TODO` notes have been updated & your new module is ready to be shared, all that's left to do is decide its new version &mdash; AKA, do the changes consitute a `patch`, `minor`, or `major` release?
+[![Version](https://img.shields.io/npm/v/config-proxy.svg)](https://www.npmjs.com/package/config-proxy)
+![Prerequisite](https://img.shields.io/badge/node-%3E%3D18-blue.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#)
 
-Once decided, you can run the following:
+> Interact with your config as if it were a normal JS object.
+
+## Disclaimer
+
+This library is experimental. Certain features may be slow or behave unexpectedly due to how the proxy handles value changes.
+
+## Prerequisites
+
+-   node >=18
+
+## Install
 
 ```sh
-$ npm version <patch|minor|major> && git push origin master --tags && npm publish
-# Example:
-# npm version patch && git push origin master --tags && npm publish
+yarn install config-proxy
 ```
 
-This command sequence will:
+## Usage
 
--   version your module, updating the `package.json` "version"
--   create and push a `git` tag (matching the new version) to your repository
--   build your module (via the `prepublishOnly` script)
--   publish the module to the npm registry
+```js
+import { ConfigProxy } from "@jdeurt/config-proxy";
 
-## License
+// Initializing ConfigProxy will automatically create your config file if it does not already exist
+const cfgIni = await ConfigProxy.load("some/path/to/cfg.ini");
 
-MIT © [Juan de Urtubey](https://jdeurt.xyz)
+// Also supports JSON!
+const cfgJson = await ConfigProxy.load("some/path/to/cfg.json", "JSON");
+
+// Changes to your config object will be reflected in the config file
+cfgJson.easyAs = [1, 2, 3];
+
+/**
+ * cfg.json
+ * {
+ *     "easyAs": [1, 2, 3]
+ * }
+ */
+```
+
+## Author
+
+👤 **Juan de Urtubey**
+
+-   Website: https://jdeurt.xyz
+-   Github: [@jdeurt](https://github.com/jdeurt)
